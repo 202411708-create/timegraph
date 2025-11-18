@@ -1,6 +1,6 @@
 {
-  "buildCommand": "npm run build",
-  "outputDirectory": "dist",
   "framework": "vite",
-  "installCommand": "npm install"
+  "buildCommand": "vite build",
+  "outputDirectory": "dist",
+  "installCommand": "npm install --legacy-peer-deps"
 }
