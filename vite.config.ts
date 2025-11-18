@@ -6,4 +6,19 @@ export default defineConfig({
   server: {
     port: 3000,
   },
+  build: {
+    outDir: 'dist',
+    sourcemap: false,
+    minify: 'esbuild',
+    target: 'es2015',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom'],
+          'motion': ['framer-motion'],
+          'charts': ['recharts'],
+        },
+      },
+    },
+  },
 })
