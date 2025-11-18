@@ -11,6 +11,7 @@ interface AppStore {
   getWasteTimeBlocks: () => WasteTimeBlock[]
   getInsight: () => string
   showComparison: () => void
+  hideComparison: () => void
   reset: () => void
 }
 
@@ -145,23 +146,23 @@ export const useFocusStore = create<AppStore>()(
             afternoonChecks.filter((c) => c.status === 'focused').length / afternoonChecks.length
 
           if (afternoonFocus < morningFocus - 0.2) {
-            return '💡 오후 시간대에 집중력이 떨어지는 경향이 있어요'
+            return 'clock|오후 시간대에 집중력이 떨어지는 경향이 있어요'
           }
         }
 
         if (stats.focusPercentage >= 70) {
-          return '🎉 훌륭해요! 높은 집중도를 유지했어요'
+          return 'check-circle|훌륭해요! 높은 집중도를 유지했어요'
         }
 
         if (stats.difference > 20) {
-          return '😅 예상보다 집중이 어려웠나봐요. 괜찮아요!'
+          return 'target|예상보다 집중이 어려웠나봐요. 괜찮아요!'
         }
 
         if (stats.difference < -10) {
-          return '🌟 예상보다 더 잘했어요! 계속 이렇게 해보세요'
+          return 'check-circle|예상보다 더 잘했어요! 계속 이렇게 해보세요'
         }
 
-        return '😊 꾸준히 연습하면 더 나아질 거예요'
+        return 'eye|꾸준히 연습하면 더 나아질 거예요'
       },
 
       showComparison: () => {
@@ -172,6 +173,18 @@ export const useFocusStore = create<AppStore>()(
           currentSession: {
             ...currentSession,
             showComparison: true,
+          },
+        })
+      },
+
+      hideComparison: () => {
+        const { currentSession } = get()
+        if (!currentSession) return
+
+        set({
+          currentSession: {
+            ...currentSession,
+            showComparison: false,
           },
         })
       },

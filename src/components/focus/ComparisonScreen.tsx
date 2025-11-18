@@ -5,33 +5,14 @@ import Card from '../common/Card'
 import MujiIcon from '../common/MujiIcon'
 
 export default function ComparisonScreen() {
-  const { getStats, getWasteTimeBlocks, getInsight, reset } = useFocusStore()
+  const { getStats, currentSession, getInsight, hideComparison, reset } = useFocusStore()
   const stats = getStats()
-  const wasteBlocks = getWasteTimeBlocks()
   const insight = getInsight()
 
-  if (!stats) return null
+  if (!stats || !currentSession) return null
 
-  const handleExport = () => {
-    const data = {
-      stats,
-      wasteBlocks,
-      insight,
-      exportedAt: new Date().toISOString(),
-    }
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = `focus-tracker-${Date.now()}.json`
-    a.click()
-    URL.revokeObjectURL(url)
-  }
-
-  const formatTime = (timestamp: number) => {
-    const date = new Date(timestamp)
-    return date.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' })
-  }
+  // Parse insight to get icon and text
+  const [insightIcon, insightText] = insight ? insight.split('|') : ['eye', '']
 
   const getDifferenceMessage = () => {
     const diff = stats.difference
@@ -123,45 +104,52 @@ export default function ComparisonScreen() {
           </div>
         </Card>
 
-        {/* Waste Time Blocks */}
-        {wasteBlocks.length > 0 && (
-          <Card>
-            <h3 className="font-semibold text-muji-dark mb-4">낭비 시간 TOP 3</h3>
-            <div className="space-y-3">
-              {wasteBlocks.map((block, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.6 + index * 0.1 }}
-                  className="flex items-start gap-3 p-3 bg-muji-bg rounded-lg"
-                >
-                  <span className="text-2xl font-bold text-muji-beige">{index + 1}</span>
-                  <div className="flex-1">
-                    <p className="text-sm font-medium text-muji-dark">
-                      {formatTime(block.startTime)} ~ {formatTime(block.endTime)}
-                    </p>
-                    <p className="text-xs text-muji-mid mt-1">
-                      {block.duration}분 동안 {block.intervalCount}회 연속
-                    </p>
-                  </div>
-                  <MujiIcon name="x-circle" size={20} className="text-muji-distracted mt-1" />
-                </motion.div>
-              ))}
+        {/* Timeline Graph */}
+        <Card>
+          <h3 className="text-sm font-medium text-muji-dark mb-3 flex items-center gap-2">
+            <MujiIcon name="chart" size={16} />
+            회차별 집중도
+          </h3>
+          <div className="flex items-end justify-between h-32 gap-1">
+            {currentSession.checks.map((check, index) => (
+              <motion.div
+                key={index}
+                initial={{ height: 0 }}
+                animate={{ height: check.status === 'focused' ? '100%' : '40%' }}
+                transition={{ duration: 0.3, delay: 0.6 + index * 0.05 }}
+                className={`flex-1 rounded-t ${
+                  check.status === 'focused' ? 'bg-muji-focused' : 'bg-muji-distracted'
+                }`}
+              />
+            ))}
+          </div>
+          <div className="flex justify-between mt-3">
+            <div className="flex items-center gap-2 text-xs text-muji-mid">
+              <div className="w-3 h-3 bg-muji-focused rounded" />
+              <span>집중</span>
             </div>
-          </Card>
-        )}
+            <div className="flex items-center gap-2 text-xs text-muji-mid">
+              <div className="w-3 h-3 bg-muji-distracted rounded" />
+              <span>딴짓</span>
+            </div>
+          </div>
+        </Card>
 
         {/* Insight */}
-        {insight && (
+        {insightText && (
           <Card>
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.9 }}
-              className="text-center p-4 bg-muji-bg rounded-lg"
+              className="flex items-center gap-3 p-4 bg-muji-bg rounded-lg"
             >
-              <p className="text-muji-dark">{insight}</p>
+              <MujiIcon
+                name={insightIcon as 'eye' | 'eye-off' | 'clock' | 'chart' | 'bell' | 'target' | 'check-circle' | 'x-circle'}
+                size={24}
+                className="text-muji-dark flex-shrink-0"
+              />
+              <p className="text-muji-dark">{insightText}</p>
             </motion.div>
           </Card>
         )}
@@ -171,8 +159,8 @@ export default function ComparisonScreen() {
           <Button onClick={reset} variant="primary" size="lg" fullWidth>
             새로 시작하기
           </Button>
-          <Button onClick={handleExport} variant="secondary" size="md" fullWidth>
-            결과 내보내기 (JSON)
+          <Button onClick={hideComparison} variant="secondary" size="md" fullWidth>
+            이전
           </Button>
         </div>
       </div>
