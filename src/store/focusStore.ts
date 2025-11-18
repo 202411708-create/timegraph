@@ -25,7 +25,7 @@ export const useFocusStore = create<AppStore>()(
           startTime: Date.now(),
           endTime: null,
           expectedFocusRate,
-          intervalMinutes: 2,
+          intervalMinutes: 5,
           checks: [],
           isActive: true,
           showComparison: false,

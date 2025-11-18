@@ -58,7 +58,7 @@ export default function IntroScreen() {
               어떻게 사용하나요?
             </h3>
             <ol className="space-y-1 text-sm text-muji-mid">
-              <li>1. 2분마다 알림이 울려요</li>
+              <li>1. 5분마다 알림이 울려요</li>
               <li>2. 집중했는지 선택해요</li>
               <li>3. 세션 종료 후 결과를 봐요</li>
             </ol>

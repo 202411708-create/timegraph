@@ -11,6 +11,8 @@ export default {
         'muji-mid': '#6b6b6b',
         'muji-beige': '#e8e3db',
         'muji-bg': '#f5f3ef',
+        'muji-focused': '#3a3a3a',
+        'muji-distracted': '#a89f91',
       },
       fontFamily: {
         sans: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],

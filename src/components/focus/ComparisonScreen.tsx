@@ -111,7 +111,7 @@ export default function ComparisonScreen() {
                 <span className="text-sm text-muji-mid">차이: </span>
                 <span
                   className={`font-semibold ${
-                    stats.difference > 0 ? 'text-orange-500' : 'text-green-600'
+                    stats.difference > 0 ? 'text-muji-distracted' : 'text-muji-focused'
                   }`}
                 >
                   {stats.difference > 0 ? '-' : '+'}
@@ -145,7 +145,7 @@ export default function ComparisonScreen() {
                       {block.duration}분 동안 {block.intervalCount}회 연속
                     </p>
                   </div>
-                  <MujiIcon name="x-circle" size={20} className="text-orange-400 mt-1" />
+                  <MujiIcon name="x-circle" size={20} className="text-muji-distracted mt-1" />
                 </motion.div>
               ))}
             </div>

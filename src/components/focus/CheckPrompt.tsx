@@ -57,11 +57,10 @@ export default function CheckPrompt({ isOpen, onClose, checkNumber }: CheckPromp
                   variant="success"
                   size="lg"
                   fullWidth
-                  className="flex items-center justify-center gap-2"
+                  className="flex items-center justify-center gap-3"
                 >
-                  <span className="text-2xl">😊</span>
+                  <MujiIcon name="check-circle" size={24} />
                   <span>집중함</span>
-                  <MujiIcon name="check-circle" size={20} />
                 </Button>
 
                 <Button
@@ -69,11 +68,10 @@ export default function CheckPrompt({ isOpen, onClose, checkNumber }: CheckPromp
                   variant="warning"
                   size="lg"
                   fullWidth
-                  className="flex items-center justify-center gap-2"
+                  className="flex items-center justify-center gap-3"
                 >
-                  <span className="text-2xl">😅</span>
+                  <MujiIcon name="x-circle" size={24} />
                   <span>딴짓함</span>
-                  <MujiIcon name="x-circle" size={20} />
                 </Button>
               </div>
 

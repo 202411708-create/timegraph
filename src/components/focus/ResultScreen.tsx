@@ -15,7 +15,7 @@ export default function ResultScreen() {
     { name: '딴짓', value: stats.distractedMinutes },
   ]
 
-  const COLORS = ['#10b981', '#fb923c']
+  const COLORS = ['#3a3a3a', '#a89f91']
 
   // Timeline data for chart
   const timelineData = currentSession.checks.map((check, index) => ({
@@ -75,13 +75,13 @@ export default function ResultScreen() {
             </div>
             <div className="flex justify-between items-center py-2 border-b border-muji-beige">
               <span className="text-muji-mid">집중</span>
-              <span className="font-semibold text-green-600">
+              <span className="font-semibold text-muji-focused">
                 {stats.focusedMinutes}분 ({stats.focusPercentage}%)
               </span>
             </div>
             <div className="flex justify-between items-center py-2">
               <span className="text-muji-mid">딴짓</span>
-              <span className="font-semibold text-orange-500">
+              <span className="font-semibold text-muji-distracted">
                 {stats.distractedMinutes}분 ({100 - stats.focusPercentage}%)
               </span>
             </div>
@@ -106,7 +106,7 @@ export default function ResultScreen() {
                     return (
                       <div className="bg-white border-2 border-muji-beige rounded px-3 py-2 text-xs">
                         <p className="text-muji-dark">
-                          체크 {data.interval}: {data.status === 'focused' ? '😊 집중' : '😅 딴짓'}
+                          체크 {data.interval}: {data.status === 'focused' ? '집중' : '딴짓'}
                         </p>
                       </div>
                     )
@@ -126,7 +126,7 @@ export default function ResultScreen() {
                       cx={cx}
                       cy={cy}
                       r={4}
-                      fill={payload.status === 'focused' ? '#10b981' : '#fb923c'}
+                      fill={payload.status === 'focused' ? '#3a3a3a' : '#a89f91'}
                       stroke="white"
                       strokeWidth={2}
                     />

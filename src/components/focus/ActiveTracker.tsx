@@ -10,7 +10,7 @@ export default function ActiveTracker() {
   const { currentSession, endSession, addCheck } = useFocusStore()
   const [elapsedSeconds, setElapsedSeconds] = useState(0)
   const [showPrompt, setShowPrompt] = useState(false)
-  const [nextCheckSeconds, setNextCheckSeconds] = useState(120) // 2 minutes = 120 seconds
+  const [nextCheckSeconds, setNextCheckSeconds] = useState(300) // 5 minutes = 300 seconds
 
   // Update elapsed time
   useEffect(() => {
@@ -24,7 +24,7 @@ export default function ActiveTracker() {
     return () => clearInterval(interval)
   }, [currentSession])
 
-  // Check for 2-minute intervals
+  // Check for 5-minute intervals
   useEffect(() => {
     if (!currentSession?.isActive) return
 
@@ -116,18 +116,18 @@ export default function ActiveTracker() {
                   animate={{ height: check.status === 'focused' ? '100%' : '40%' }}
                   transition={{ duration: 0.3, delay: index * 0.05 }}
                   className={`flex-1 rounded-t ${
-                    check.status === 'focused' ? 'bg-green-500' : 'bg-orange-400'
+                    check.status === 'focused' ? 'bg-muji-focused' : 'bg-muji-distracted'
                   }`}
                 />
               ))}
             </div>
             <div className="flex justify-between mt-2">
               <div className="flex items-center gap-2 text-xs text-muji-mid">
-                <div className="w-3 h-3 bg-green-500 rounded" />
+                <div className="w-3 h-3 bg-muji-focused rounded" />
                 <span>집중</span>
               </div>
               <div className="flex items-center gap-2 text-xs text-muji-mid">
-                <div className="w-3 h-3 bg-orange-400 rounded" />
+                <div className="w-3 h-3 bg-muji-distracted rounded" />
                 <span>딴짓</span>
               </div>
             </div>
