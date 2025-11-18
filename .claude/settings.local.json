@@ -3,7 +3,11 @@
     "allow": [
       "Bash(git init:*)",
       "Bash(git remote add:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nInitial commit: Focus Tracker for ADHD students\n\n- MUJI-styled minimalist design\n- 2-minute interval tracking\n- Real-time progress monitoring\n- Auto notification with sound\n- Results analysis with charts\n- Comparison with expected focus rate\n- Waste time block detection\n- Auto-generated insights\n- JSON export functionality\n- localStorage persistence\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git config:*)",
+      "Bash(git push:*)",
+      "Bash(git commit:*)"
     ],
     "deny": [],
     "ask": []

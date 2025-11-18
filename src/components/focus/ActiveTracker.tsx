@@ -12,29 +12,6 @@ export default function ActiveTracker() {
   const [showPrompt, setShowPrompt] = useState(false)
   const [nextCheckSeconds, setNextCheckSeconds] = useState(120) // 2 minutes = 120 seconds
 
-  // Play notification sound
-  const playNotificationSound = () => {
-    try {
-      const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)()
-      const oscillator = audioContext.createOscillator()
-      const gainNode = audioContext.createGain()
-
-      oscillator.connect(gainNode)
-      gainNode.connect(audioContext.destination)
-
-      oscillator.frequency.value = 800
-      oscillator.type = 'sine'
-
-      gainNode.gain.setValueAtTime(0.3, audioContext.currentTime)
-      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5)
-
-      oscillator.start(audioContext.currentTime)
-      oscillator.stop(audioContext.currentTime + 0.5)
-    } catch (error) {
-      console.log('Audio not supported')
-    }
-  }
-
   // Update elapsed time
   useEffect(() => {
     if (!currentSession?.isActive) return
@@ -57,7 +34,6 @@ export default function ActiveTracker() {
 
     if (elapsedSeconds > 0 && elapsedSeconds % intervalSeconds === 0) {
       setShowPrompt(true)
-      playNotificationSound()
     }
   }, [elapsedSeconds, currentSession])
 
